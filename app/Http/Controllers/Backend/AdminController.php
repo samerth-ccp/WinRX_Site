@@ -51,11 +51,11 @@ class AdminController extends Controller{
 
 
 		$last_seven_dates = getlastsevenday();
-		$users = DB::table('users')->select('id',DB::raw('DATE(created_at) as created_at'))->whereIn(DB::raw('DATE(created_at)'),$last_seven_dates)->get()->all();
+		//$users = DB::table('users')->select('id',DB::raw('DATE(created_at) as created_at'))->whereIn(DB::raw('DATE(created_at)'),$last_seven_dates)->get()->all();
         $productCount = $this->product->where('product_status','1')->count();
 		//prd($users);
 
-		$user_Arr=array();
+		/*$user_Arr=array();
 		foreach($last_seven_dates as $k=>$date)
 		{
 			$seven_dates[]=date("d, M", strtotime($date));
@@ -71,9 +71,9 @@ class AdminController extends Controller{
 			}
 		}
 		$last_seven_users = $user_Arr;
-		$last_seven_dates = $seven_dates;
+		$last_seven_dates = $seven_dates;*/
 
-		return view('Backend.index.index',compact('last_seven_users','last_seven_dates','productCount'));
+		return view('Backend.index.index',compact('productCount'));
 
     }
 
