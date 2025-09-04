@@ -40,8 +40,8 @@ jobs:
       - name: Install dependencies (Composer)
         if: ${{ hashFiles('composer.json') != '' }}
         run: |
-          composer validate --no-check-publish
-          composer install --no-dev --prefer-dist --no-interaction --no-progress --optimize-autoloader
+          composer validate --no-check-publish          
+          composer install --no-dev --prefer-dist --no-interaction --no-progress --optimize-autoloader --no-scripts
           # Optional (Laravel): precompile caches; safe even without .env
           php artisan config:clear || true
           php artisan route:cache || true
@@ -74,3 +74,4 @@ jobs:
           slot-name: Production
           package: app.zip
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_ECF72440E87C431C87096F01C8B4EC60 }}
+
