@@ -1,0 +1,1 @@
+{"version":3,"sources":["locale.js"],"names":["module","exports","strings","generatingThumbnails"],"mappings":"AAAAA,MAAM,CAACC,OAAP,GAAiB;AACfC,EAAAA,OAAO,EAAE;AACPC,IAAAA,oBAAoB,EAAE;AADf;AADM,CAAjB","sourcesContent":["module.exports = {\n  strings: {\n    generatingThumbnails: 'Generating thumbnails...',\n  },\n}\n"]}
