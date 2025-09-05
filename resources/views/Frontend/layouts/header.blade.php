@@ -31,7 +31,7 @@
             </a>
             {{--  --}}
             <ul class="nav ms-auto">
-                @if (strpos($currentUrl, 'shop') !== false)
+                @if (strpos($currentUrl, 'shop') !== false || strpos($currentUrl, 'cart') !== false || strpos($currentUrl, 'product-detail') !== false)
                 <li class="d-xl-block d-none"><a href="{{ route('frontend.index.index').'#why-ring' }}" class="nav-link"> Why Ring </a></li>
                 @else
                 <li class="d-xl-block d-none"><a href="#why-ring" class="nav-link"> Why Ring </a></li>
@@ -50,7 +50,7 @@
 <div id="sidebarMenu" class="d-xl-none d-block hidden">
     <div class="close_button" id="closeSidebarMenu"> <img src="{{asset('assets/images/close.png')}}" alt=""> </div>
     <ul class="sidebarMenuInner">
-        @if (strpos($currentUrl, 'shop') !== false)
+        @if (strpos($currentUrl, 'shop') !== false || strpos($currentUrl, 'cart') !== false || strpos($currentUrl, 'product-detail') !== false)
         <li><a href="{{ route('frontend.index.index').'#why-ring' }}" class="nav-link"> Why Ring </a></li>
         @else
         <li><a href="#why-ring" class="nav-link"> Why Ring </a></li>
