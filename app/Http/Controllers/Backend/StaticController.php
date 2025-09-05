@@ -549,7 +549,12 @@ class StaticController extends Controller
                     $sliderDataInsert['slider_section_tagline_image'] = $isUpload["media_path"]["slider_section_tagline_image"]["mediaPath"];
                     if(!empty($sliderData->slider_section_tagline_image)) {
                         $fileName = str_replace($http_path,'',$sliderData->slider_section_tagline_image);
-					    $isDelete = Uploader::universalUnlink($fileName,storage_path('app/public/homeimages/'));
+                        $filePath = storage_path('app/public/homeimages/') . $fileName;
+                        if (file_exists($filePath)) {
+                            $isDelete = Uploader::universalUnlink($fileName, storage_path('app/public/homeimages/'));
+                        } else {
+                            $isDelete = false; // or handle this however you need
+                        }
                     }
                 } else {
                     if(!empty($sliderData->slider_section_tagline_image)) {
@@ -560,7 +565,12 @@ class StaticController extends Controller
                     $sliderDataInsert['slider_section_background_image'] = $isUpload["media_path"]["slider_section_background_image"]["mediaPath"];
                     if(!empty($sliderData->slider_section_background_image)) {
                         $fileName = str_replace($http_path,'',$sliderData->slider_section_background_image);
-					    $isDelete = Uploader::universalUnlink($fileName,storage_path('app/public/homeimages/'));
+					    $filePath = storage_path('app/public/homeimages/') . $fileName;
+                        if (file_exists($filePath)) {
+                            $isDelete = Uploader::universalUnlink($fileName, storage_path('app/public/homeimages/'));
+                        } else {
+                            $isDelete = false; // or handle this however you need
+                        }
                     }
                 } else {
                     if(!empty($sliderData->slider_section_background_image)) {
@@ -571,14 +581,24 @@ class StaticController extends Controller
                     $sliderDataInsert['slider_section_image'] = $isUpload["media_path"]["slider_section_image"]["mediaPath"];
                     if(!empty($sliderData->slider_section_image)) {
                         $fileName = str_replace($http_path,'',$sliderData->slider_section_image);
-					    $isDelete = Uploader::universalUnlink($fileName,storage_path('app/public/homeimages/'));
+					    $filePath = storage_path('app/public/homeimages/') . $fileName;
+                        if (file_exists($filePath)) {
+                            $isDelete = Uploader::universalUnlink($fileName, storage_path('app/public/homeimages/'));
+                        } else {
+                            $isDelete = false; // or handle this however you need
+                        }
                     }
                 }
                 if(!empty($isUpload["media_path"]["slider_section_reviewer_image"]["mediaPath"])) {
                     $sliderDataInsert['slider_section_reviewer_image'] = $isUpload["media_path"]["slider_section_reviewer_image"]["mediaPath"];
                     if(!empty($sliderData->slider_section_reviewer_image)) {
                         $fileName = str_replace($http_path,'',$sliderData->slider_section_reviewer_image);
-					    $isDelete = Uploader::universalUnlink($fileName,storage_path('app/public/homeimages/'));
+					    $filePath = storage_path('app/public/homeimages/') . $fileName;
+                        if (file_exists($filePath)) {
+                            $isDelete = Uploader::universalUnlink($fileName, storage_path('app/public/homeimages/'));
+                        } else {
+                            $isDelete = false; // or handle this however you need
+                        }
                     }
                 }
 
