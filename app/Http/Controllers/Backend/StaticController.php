@@ -522,16 +522,21 @@ class StaticController extends Controller
                 unset($data['_token']);
 
                 if(!empty($request->file())){
-					$isUpload = Uploader::universalUpload(
-						array(
-							'directory'=>storage_path('app/public/homeimages/'),
-							'files'=>array('slider_section_tagline_image','slider_section_background_image','slider_section_image','slider_section_reviewer_image'),
-							'multiple'=>false,
-							'thumb'=>array(), //array('w'=>60,'h'=>60)
-							'allowExtension' => array('jpg','png','JPG','PNG','svg','SVG'),
-						),
-						$request
-					);
+                    try {
+                        $isUpload = Uploader::universalUpload(
+                            array(
+                                'directory'=>storage_path('app/public/homeimages/'),
+                                'files'=>array('slider_section_tagline_image','slider_section_background_image','slider_section_image','slider_section_reviewer_image'),
+                                'multiple'=>false,
+                                'thumb'=>array(), //array('w'=>60,'h'=>60)
+                                'allowExtension' => array('jpg','png','JPG','PNG','svg','SVG'),
+                            ),
+                            $request
+                        );
+                        prd($isUpload);
+                    } catch (\Exception | Error $e) {
+                        prd($e->getMessage());
+                    }
                 }
                 $sliderDataInsert['slider_section_tagline'] = $data['slider_section_tagline'];
 				$sliderDataInsert['slider_section_heading'] = $data['slider_section_heading'];
