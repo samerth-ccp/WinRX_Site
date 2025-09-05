@@ -4,7 +4,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Deploy PHP/Laravel to Azure Web App
+name: Deploy PHP/Laravel to Azure Web App (ZipDeploy + preserve storage)
 
 on:
   push:
@@ -26,12 +26,12 @@ jobs:
         with:
           php-version: '8.3'
           tools: composer:v2
-          # add ext your app needs
           extensions: mbstring, intl, pdo_mysql, bcmath, curl, gd, zip, openssl, tokenizer, xml, ctype, dom, fileinfo
 
       - name: Cache Composer
         id: composer-cache
         run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
       - name: Restore Composer cache
         uses: actions/cache@v4
         with:
@@ -39,19 +39,27 @@ jobs:
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
           restore-keys: ${{ runner.os }}-composer-
 
-      # Only run Composer if composer.json exists (no deprecated set-output)
       - name: Install dependencies (Composer)
         if: ${{ hashFiles('composer.json') != '' }}
         run: |
-          composer validate --no-check-publish          
+          composer validate --no-check-publish
           composer install --no-dev --prefer-dist --no-interaction --no-progress --optimize-autoloader --no-scripts
-          # Optional (Laravel): precompile caches; safe even without .env
           php artisan config:clear || true
           php artisan route:cache || true
-          php artisan view:cache || true
-      - name: Create deployment package
+          php artisan view:cache  || true
+
+      # ⬇️ Create ZIP but exclude storage paths & the symlink location
+      - name: Create deployment package (exclude storage)
         run: |
-          zip -r app.zip . -x "tests/**" ".git/**" ".github/**"
+          zip -r app.zip . \
+            -x "tests/**" ".git/**" ".github/**" \
+               "storage/app/public/**" \
+               "storage/framework/cache/**" \
+               "storage/framework/sessions/**" \
+               "storage/framework/views/**" \
+               "storage/logs/**" \
+               "public/storage/**"
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
@@ -61,6 +69,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
+    env:
+      APP_NAME: WinRXwebapp
 
     steps:
       - name: Download artifact
@@ -68,13 +78,35 @@ jobs:
         with:
           name: build-artifact
 
+      # 🚀 Zip Deploy using publish profile (full replace of packaged files)
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
-          app-name: WinRXwebapp                # <-- your App Service name
+          app-name: WinRXwebapp
           slot-name: Production
           package: app.zip
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_ECF72440E87C431C87096F01C8B4EC60 }}
+
+      # 🔧 Post-deploy: recreate the storage symlink on the server via Kudu API
+      - name: Recreate storage symlink (php artisan storage:link)
+        env:
+          PUBLISH_PROFILE: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_ECF72440E87C431C87096F01C8B4EC60 }}
+        run: |
+          # Save the publish profile XML to a file
+          echo "$PUBLISH_PROFILE" > publishProfile.xml
+
+          # Extract Kudu (scm) host and credentials from the publish profile
+          KUDU_USER=$(grep -oP 'scmUri="https://\K[^:]+' publishProfile.xml | head -n1)
+          KUDU_PASS=$(grep -oP 'scmUri="https://[^:]+:\K[^@]+' publishProfile.xml | head -n1)
+          KUDU_HOST=$(grep -oP 'scmUri="https://[^@]+@\K[^/"]+' publishProfile.xml | head -n1)
+
+          # Run the command in /home/site/wwwroot
+          curl -sS -u "$KUDU_USER:$KUDU_PASS" \
+            -H "Content-Type: application/json" \
+            -X POST "https://$KUDU_HOST/api/command" \
+            -d '{"command":"php artisan storage:link","dir":"/home/site/wwwroot"}' \
+            || true
+
 
 
 
