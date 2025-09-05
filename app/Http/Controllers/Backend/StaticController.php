@@ -533,7 +533,6 @@ class StaticController extends Controller
                             ),
                             $request
                         );
-                        prd($isUpload);
                     } catch (\Exception | Error $e) {
                         prd($e->getMessage());
                     }
