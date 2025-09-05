@@ -1,9 +1,6 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-# Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# More GitHub Actions for Azure: https://github.com/Azure/actions
-
 name: Deploy PHP/Laravel to Azure Web App (ZipDeploy + preserve storage)
 
 on:
@@ -106,6 +103,8 @@ jobs:
             -X POST "https://$KUDU_HOST/api/command" \
             -d '{"command":"php artisan storage:link","dir":"/home/site/wwwroot"}' \
             || true
+
+
 
 
 
