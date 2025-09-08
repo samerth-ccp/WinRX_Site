@@ -886,7 +886,7 @@ class StaticController extends Controller
                 $complementInsert['shop_complement_section_sub_heading'] = $data['shop_complement_section_sub_heading'];
                 $complementInsert['shop_complement_section_description'] = $data['shop_complement_section_description'];
                 if(!empty($complementContent)) {
-				    $isUpdated = DB::table('shop_complement_section')->where('shop_smart_id',1)->update($complementInsert);
+				    $isUpdated = DB::table('shop_complement_section')->where('shop_complement_section_id',1)->update($complementInsert);
                 } else {
                     $isUpdated = DB::table('shop_complement_section')->insert($complementInsert);
                 }

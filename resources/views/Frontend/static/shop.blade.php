@@ -254,4 +254,15 @@
 
 @section('script')
 <!-- Include Js -->
+<script type="text/javascript">
+$(document).ready(function() {
+    // Save original video content
+    var originalVideoContent = $('#videoModal .modal-body').html();
+
+    $('#videoModal').on('hidden.bs.modal', function () {
+        // Clear and restore content to stop the video
+        $('#videoModal .modal-body').html(originalVideoContent);
+    });
+});
+</script>
 @endsection

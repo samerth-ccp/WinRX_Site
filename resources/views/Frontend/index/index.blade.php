@@ -75,7 +75,7 @@
                                 <div class="ccbbc_left_block">
                                     <h3 class="accb_title"> {{ $sliderDataVal->slider_section_heading }}<br/> <span>{{ $sliderDataVal->slider_section_sub_heading }}</span> </h3>
                                     <p> {{ $sliderDataVal->slider_section_para }} </p>
-                                    <a href="javascript:void(0)" class="btn shop_btn"> Shop </a>
+                                    <a href="{{route('frontend.static.shop')}}" class="btn shop_btn"> Shop </a>
                                 </div>
                                 <div class="ccbbc_right_block">
                                     @if(!empty($sliderDataVal->slider_section_reviewer_name))
