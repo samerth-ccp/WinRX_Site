@@ -24,7 +24,7 @@
                     @if(!empty($shopcomplementContentData->shop_complement_content_id))
                     <form method="post" action="{{ route('backend.manageshopcomplementcontent',['pid'=>encrypt($shopcomplementContentData->shop_complement_content_id)]) }}" class="needs-validation" id="complement_section"  enctype='multipart/form-data' novalidate>
                     @else
-                    <form method="post" action="{{ route('backend.manageshopcomplementcontent') }}" class="needs-validation" id="complement_section"  enctype='multipart/form-data' novalidate>
+                    <form method="post" action="{{ route('backend.manageshopcomplementcontent',['pid'=>null]) }}" class="needs-validation" id="complement_section"  enctype='multipart/form-data' novalidate>
                     @endif
                     @csrf
                     <div class="row">

@@ -24,7 +24,7 @@
                     @if(!empty($sliderData->slider_section_id))
                     <form method="post" action="{{ route('backend.manageslidersection',['pid'=>encrypt($sliderData->slider_section_id)]) }}" class="needs-validation" id="slider_section"  enctype='multipart/form-data' novalidate>
                     @else
-                    <form method="post" action="{{ route('backend.manageslidersection') }}" class="needs-validation" id="slider_section"  enctype='multipart/form-data' novalidate>
+                    <form method="post" action="{{ route('backend.manageslidersection',['pid'=>null]) }}" class="needs-validation" id="slider_section"  enctype='multipart/form-data' novalidate>
                     @endif
                     @csrf
                     <div class="row">

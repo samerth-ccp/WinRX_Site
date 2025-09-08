@@ -24,7 +24,7 @@
                     @if(!empty($shoptechData->shop_tech_section_id))
                     <form method="post" action="{{ route('backend.manageshoptechsection',['pid'=>encrypt($shoptechData->shop_tech_section_id)]) }}" class="needs-validation" id="tech_section"  enctype='multipart/form-data' novalidate>
                     @else
-                    <form method="post" action="{{ route('backend.manageshoptechsection') }}" class="needs-validation" id="tech_section"  enctype='multipart/form-data' novalidate>
+                    <form method="post" action="{{ route('backend.manageshoptechsection',['pid'=>null]) }}" class="needs-validation" id="tech_section"  enctype='multipart/form-data' novalidate>
                     @endif
                     @csrf
                     <div class="row">
