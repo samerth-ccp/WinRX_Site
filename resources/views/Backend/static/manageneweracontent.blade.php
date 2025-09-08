@@ -24,7 +24,7 @@
                     @if(!empty($neweraContentData->newera_section_content_id))
                     <form method="post" action="{{ route('backend.manageneweracontent',['pid'=>encrypt($neweraContentData->newera_section_content_id)]) }}" class="needs-validation" id="slider_section"  enctype='multipart/form-data' novalidate>
                     @else
-                    <form method="post" action="{{ route('backend.manageneweracontent') }}" class="needs-validation" id="slider_section"  enctype='multipart/form-data' novalidate>
+                    <form method="post" action="{{ route('backend.manageneweracontent',['pid'=> null]) }}" class="needs-validation" id="slider_section"  enctype='multipart/form-data' novalidate>
                     @endif
                     @csrf
                     <div class="row">

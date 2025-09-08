@@ -24,7 +24,7 @@
                     @if(!empty($aboutContentData->about_section_content_id))
                     <form method="post" action="{{ route('backend.manageaboutcontent',['pid'=>encrypt($aboutContentData->about_section_content_id)]) }}" class="needs-validation" id="slider_section"  enctype='multipart/form-data' novalidate>
                     @else
-                    <form method="post" action="{{ route('backend.manageaboutcontent') }}" class="needs-validation" id="slider_section"  enctype='multipart/form-data' novalidate>
+                    <form method="post" action="{{ route('backend.manageaboutcontent',['pid'=>null]) }}" class="needs-validation" id="slider_section"  enctype='multipart/form-data' novalidate>
                     @endif
                     @csrf
                     <div class="row">

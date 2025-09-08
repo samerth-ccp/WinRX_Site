@@ -1640,7 +1640,11 @@ class StaticController extends Controller
                 if(!empty($neweraContentData)) {
 				    $isUpdated = DB::table('newera_section_content')->where('newera_section_content_id',$pid)->update($eraDataInsert);
                 } else {
-                    $isUpdated = DB::table('newera_section_content')->insert($eraDataInsert);
+                    try {
+                        $isUpdated = DB::table('newera_section_content')->insert($eraDataInsert);
+                    } catch (\Exception | Error $e) {
+                        prd($e->getMessage());
+                    }
                 }
                 if($isUpdated){
                     if(!empty($neweraContentData)) {
