@@ -29,7 +29,7 @@ Route::group(['middleware' => ['guest'],'prefix' => config('app.backend')], func
     Route::get('/login', [LoginController::class, 'getLoginForm'])->name('backend.login');
     Route::post('/authenticate', [LoginController::class, 'authenticate'])->name('backend.authenticate');
 
-    Route::get('/password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
+    //Route::get('/password/reset', [ForgotPasswordController::class, 'showLinkRequestForm'])->name('password.request');
     Route::post('/password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
     Route::get('/password/reset/{token}', [ResetPasswordController::class, 'showResetForm'])->name('password.reset');
     Route::post('/password/resetpassword/{token}', [ResetPasswordController::class, 'resetpassword'])->name('password.update');
@@ -45,8 +45,8 @@ Route::group(['middleware' => ['admins'],'prefix' => config('app.backend')], fun
     Route::post('/update-site-configuration/{key}', [AdminController::class, 'updatesiteconfigs'])->name('backend.updatesiteconfigs');
 
     /** Admin Profile */
-    Route::match(['get','post'],'/admin-profile', [AdminController::class, 'adminprofile'])->name('backend.adminprofile');
-    Route::match(['get','post'],'/admin-reset-password', [AdminController::class, 'adminresetpassword'])->name('backend.resetpassword');
+    //Route::match(['get','post'],'/admin-profile', [AdminController::class, 'adminprofile'])->name('backend.adminprofile');
+    //Route::match(['get','post'],'/admin-reset-password', [AdminController::class, 'adminresetpassword'])->name('backend.resetpassword');
 
     /** Users */
     Route::get('/users', [UserController::class, 'users'])->name('backend.users');
