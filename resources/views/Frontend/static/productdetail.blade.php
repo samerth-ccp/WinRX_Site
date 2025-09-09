@@ -4,6 +4,7 @@
 <!-- Include css -->
 <style>
     .slick-slide { padding: 0px 10px; }
+    .add_cart_btn:active {transform: scale(0.95);box-shadow: 0 2px 5px rgba(0,0,0,0.2) inset;background: linear-gradient(to bottom, #222222, #111111);}
 </style>
 @endsection
 
@@ -267,6 +268,16 @@
         });
     }
 
+    $(window).on('pageshow', function(event) {
+        if (event.originalEvent.persisted) {
+            // Page was restored from bfcache
+            $(".add_cart_btn").prop("disabled", false);
+        } else {
+            // Normal load
+            $(".add_cart_btn").prop("disabled", false);
+        }
+    });
+
     $(document).ready(function() {
         $('.tis_card_slider').slick({
             dots: false,
@@ -318,14 +329,20 @@
     });
 
     const addToCart = async () => {
+        $(".add_cart_btn").prop("disabled",true);
         const resp = await fetch(`{{route('cart.add')}}`, {
             method: 'POST',
             headers: {'Content-Type':'application/json','X-CSRF-TOKEN':document.querySelector('meta[name=csrf-token]').content},
             body: JSON.stringify({ product_id: {{$product->product_id}}, qty: 1, meta: { size:$('[name="size"]:checked').val(), color:$('[name="color"]:checked').val() } })
         }).then(response => response.json()).then(data => {
-            showNotify('success',data.message);
-            $('.card_count').text(Object.keys(data.data.items).length);
-            window.location.href = "{{route('frontend.static.cart')}}";
+            if(data.status == false) {
+                $(".add_cart_btn").prop("disabled",false);
+                showNotify('error',data.message);
+            } else {
+                showNotify('success',data.message);
+                $('.card_count').text(Object.keys(data.data.items).length);
+                window.location.href = "{{route('frontend.static.cart')}}";
+            }
         });
 
     }

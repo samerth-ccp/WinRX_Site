@@ -1,10 +1,11 @@
 @if(!empty($lines))
     @foreach($lines as $l=>$line)
-        <div class="olb_block" data-product="{{$line['key']}}"  data-aos="fade-up" data-aos-delay="50" data-aos-offset="0">
+        <!-- data-aos="fade-up" data-aos-delay="50" data-aos-offset="0" -->
+        <div class="olb_block" data-product="{{$line['key']}}">
             <div class="olb_info">
-                <div class="olb_img"> <img src="{{asset('assets/storage/products/'.$line['product_image'])}}" alt="img"> </div>
+                <div class="olb_img"> <a href="{{ route('frontend.static.productdetail', ['pid' => encrypt($line['product_id'])]) }}"><img src="{{asset('assets/storage/products/'.$line['product_image'])}}" alt="img"></a> </div>
                 <div class="olb_detail">
-                    <p class="p_name"> {{$line['product_name']}} </p>
+                    <p class="p_name"> <a href="{{ route('frontend.static.productdetail', ['pid' => encrypt($line['product_id'])]) }}" class="p_name">{{$line['product_name']}}</a> </p>
                     <p class="p_size"> Size: {{$line['size']}} </p>
                     <p class="p_color"> Color: {{$line['color']}} </p>
                     <p class="p_amount"> ${{$line['unit_cents']}} </p>

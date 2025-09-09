@@ -16,32 +16,34 @@ class CookieCartController extends Controller
     public function show(Request $req)
     {
         $cookieCart = $this->cart->read($req);
-
         // Rehydrate for display (compute price safely server-side)
         $lines = [];
         foreach ($cookieCart['items'] as $key => $item) {
-            $product = Product::findOrFail($item['product_id']);
+            try {
+                $product = Product::findOrFail($item['product_id']);
+                $color = $product->color->find($item['meta']['color']);
+                $size = $item['meta']['size'];
 
-            $color = $product->color->find($item['meta']['color']);
-            $size = $item['meta']['size'];
+                // example pricing logic:
+                $prices = $product->product_price;
+                $unit = $prices[$color->color_id];
 
-            // example pricing logic:
-            $prices = $product->product_price;
-            $unit = $prices[$color->color_id];
+                $lines[] = [
+                    'key'          => $key,
+                    'product_id'   => $product->product_id,
+                    'product_name' => $product->product_name,
+                    'product_image' => $product->product_image,
+                    'product'    => ['id'=>$product->product_id,'name'=>$product->product_name],
+                    'qty'        => $item['qty'],
+                    'meta'       => $item['meta'] ?? [],
+                    'color'     => $color->color_name,
+                    'size'       => $size,
+                    'unit_cents' => $unit,
+                    'line_cents' => ($unit * $item['qty']),
+                ];
+            } catch (\Exception | Error $e) {
 
-            $lines[] = [
-                'key'          => $key,
-                'product_id'   => $product->product_id,
-                'product_name' => $product->product_name,
-                'product_image' => $product->product_image,
-                'product'    => ['id'=>$product->product_id,'name'=>$product->product_name],
-                'qty'        => $item['qty'],
-                'meta'       => $item['meta'] ?? [],
-                'color'     => $color->color_name,
-                'size'       => $size,
-                'unit_cents' => $unit,
-                'line_cents' => ($unit * $item['qty']),
-            ];
+            }
         }
 
         $total = number_format((array_sum(array_column($lines, 'line_cents'))),2);
@@ -66,10 +68,24 @@ class CookieCartController extends Controller
 
         // Validate stock server-side
         $product = Product::findOrFail($data['product_id']);
-
+        if($product->product_status  == '0') {
+            return response()->json(['status'=>false,'data'=> '','message' => 'The selected product is not available.']);
+        }
         if (!$product->product_status) abort(422, 'Unavailable');
         //if ($product->stock < $data['qty']) abort(422, 'Insufficient stock');
-
+        $product_sizes = $product->size->toArray();
+        $sizes = array_column($product_sizes,'size');
+        if($product->product_status  == '0') {
+            return response()->json(['status'=>false,'data'=> '','message' => 'The selected product is not available.']);
+        }
+        if(!in_array($data['meta']['size'],$sizes)) {
+            return response()->json(['status'=>false,'data'=> '','message' => 'The selected product is not available in this size.']);
+        }
+        $product_colors = $product->color->toArray();
+        $colors = array_column($product_colors,'color_id');
+        if(!in_array($data['meta']['color'],$colors)) {
+            return response()->json(['status'=>false,'data'=> '','message' => 'The selected product is not available in this color.']);
+        }
         $cart = $this->cart->add($req, $data['product_id'], $data['qty'], $data['meta'] ?? []);
 
         return response()->json(['status'=>true,'data'=> $cart,'message' => 'Item added to cart.']);
@@ -99,9 +115,14 @@ class CookieCartController extends Controller
     public function count(Request $req)
     {
         $cookieCart = $this->cart->read($req);
-
+        foreach ($cookieCart['items'] as $key => $item) {
+            try {
+                $product = Product::findOrFail($item['product_id']);
+            } catch(\Exception | Error $e) {
+                unset($cookieCart['items'][$key]);
+            }
+        }
         $items = $cookieCart['items'] ?? [];
-
         $count = count($items);
         //array_sum(array_column($items, 'qty'));
 

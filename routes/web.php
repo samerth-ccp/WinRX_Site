@@ -27,10 +27,10 @@ Route::group(['middleware' => ['guest']], function() {
 
     /**Static Page */
     Route::get('/index',[StaticController::class, 'index'])->name('frontend.static.index');
-    Route::get('/about-us',[StaticController::class, 'aboutUs'])->name('frontend.static.aboutus');
-    Route::match(['get','post'],'/contact-us',[StaticController::class, 'contactUs'])->name('frontend.static.contactus');
-    Route::get('/terms-and-condition',[StaticController::class, 'termsAndCondition'])->name('frontend.static.terms');
-    Route::get('/privacy-policy',[StaticController::class, 'privacyPolicy'])->name('frontend.static.privacy');
+    //Route::get('/about-us',[StaticController::class, 'aboutUs'])->name('frontend.static.aboutus');
+    //Route::match(['get','post'],'/contact-us',[StaticController::class, 'contactUs'])->name('frontend.static.contactus');
+    //Route::get('/terms-and-condition',[StaticController::class, 'termsAndCondition'])->name('frontend.static.terms');
+    //Route::get('/privacy-policy',[StaticController::class, 'privacyPolicy'])->name('frontend.static.privacy');
 
     Route::get('/shop',[StaticController::class, 'shop'])->name('frontend.static.shop');
     Route::get('/product-detail/{pid?}',[StaticController::class, 'productDetail'])->name('frontend.static.productdetail');
@@ -38,10 +38,10 @@ Route::group(['middleware' => ['guest']], function() {
 
 
     /** Auth - Before Log in */
-    Route::match(['get','post'],'/login',[LoginController::class, 'login'])->name('frontend.login');
-    Route::match(['get','post'],'/sign-up',[RegisterController::class, 'register'])->name('frontend.register');
-    Route::match(['get','post'],'/forgot-password',[ForgotPasswordController::class, 'forgotPassowrd'])->name('frontend.forgotpassowrd');
-    Route::match(['get','post'],'/reset-password/{token}',[ResetPasswordController::class, 'resetPassword'])->name('frontend.resetpassword');
+    //Route::match(['get','post'],'/login',[LoginController::class, 'login'])->name('frontend.login');
+    //Route::match(['get','post'],'/sign-up',[RegisterController::class, 'register'])->name('frontend.register');
+    //Route::match(['get','post'],'/forgot-password',[ForgotPasswordController::class, 'forgotPassowrd'])->name('frontend.forgotpassowrd');
+    //Route::match(['get','post'],'/reset-password/{token}',[ResetPasswordController::class, 'resetPassword'])->name('frontend.resetpassword');
 
     /**Email Verification */
     Route::get('/email-verification/{token}',[RegisterController::class, 'emailverification'])->name('frontend.emailverification');
@@ -65,6 +65,9 @@ Route::group(['middleware' => ['guest']], function() {
     /** Stripe WebHook */
     Route::match(['get','post'],'/stripe-webhook-response', [StripeController::class, 'webhookResponse'])->name('stripe.webhookresponse');
 
+    Route::get('cart/items/{any}', function() {
+            abort(404);
+        })->where('any', '.*');
     /* Add to Cart */
     Route::prefix('cart')->group(function(){
         Route::post('items', [CookieCartController::class, 'add'])->name('cart.add');

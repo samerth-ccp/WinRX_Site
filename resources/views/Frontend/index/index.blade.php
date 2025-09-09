@@ -26,7 +26,7 @@
             @forEach($productData as $product)
             <div class="col-sm-6">
                 <div class="banner_card_block" data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-delay="300" data-aos-offset="0">
-                    <img src="{{ asset('assets/storage/products/'.$product->product_image) }}" alt="ring" />
+                    <a href="{{ route('frontend.static.productdetail', ['pid' => encrypt($product->product_id)]) }}"><img src="{{ asset('assets/storage/products/'.$product->product_image) }}" alt="ring" /></a>
                     <div class="ring_info_block">
                         <div class="rib_box">
                             <h2 class="ring_name"> {{ $product->product_name }} </h2>
