@@ -14,8 +14,8 @@
             <div class="col-12">
                 <div class="banner_screen_block" data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-delay="100" data-aos-offset="0">
                     <img class="banner_bg" src="{{ asset('assets/storage/homeimages/').'/'.$bannerData->banner_background_image }}" alt="ring" />
-                    <div class="bsb_content_block">
-                        <div class="" data-aos="fade-up" data-aos-easing="linear" data-aos-duration="0">
+                    <div class="bsb_content_block" data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-delay="300" data-aos-offset="0">
+                        <div class="">
                             <h1> {{ $bannerData->banner_first_heading ?? 'Minimal. Intelligent.' }} <img class="ring-flip" src="{{ asset('assets/storage/homeimages/').'/'.$bannerData->banner_image }}" alt="ring" /> {{ $bannerData->banner_second_heading ?? 'Made for you.' }} </h1>
                             <p> {{ $bannerData->banner_para ?? 'Your complete health loop' }} </p>
                         </div>
@@ -134,12 +134,12 @@
         <div class="page_container">
             <div class="ars_tab_block">
                 <div class="d-flex align-items-start">
-                    <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                    <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical" data-aos="fade-up" data-aos-delay="300" data-aos-offset="0">
                         @forEach($aboutContentData as $abtKey => $aboutContent)
                         @if($abtKey == 0)
-                        <button class="nav-link active" id="v-pills-{{ $abtKey }}" data-bs-toggle="pill" data-bs-target="#v-pills-tab-{{ $abtKey }}" type="button" role="tab" aria-controls="v-pills-{{ $abtKey }}" aria-selected="true" data-aos="fade-right" data-aos-delay="300" data-aos-offset="0"> <img src="{{asset('assets/images/solar_arrow_active.svg')}}" alt="" > {{ $aboutContent->about_section_content_title }}</button>
+                        <button class="nav-link active" id="v-pills-{{ $abtKey }}" data-bs-toggle="pill" data-bs-target="#v-pills-tab-{{ $abtKey }}" type="button" role="tab" aria-controls="v-pills-{{ $abtKey }}" aria-selected="true"> <img src="{{asset('assets/images/solar_arrow_active.svg')}}" alt="" > {{ $aboutContent->about_section_content_title }}</button>
                         @else
-                        <button class="nav-link" id="v-pills-{{ $abtKey }}" data-bs-toggle="pill" data-bs-target="#v-pills-tab-{{ $abtKey }}" type="button" role="tab" aria-controls="v-pills-{{ $abtKey }}" aria-selected="true" data-aos="fade-right" data-aos-delay="300" data-aos-offset="0"> <img src="{{asset('assets/images/solar_arrow_active.svg')}}" alt="" > {{ $aboutContent->about_section_content_title }}</button>
+                        <button class="nav-link" id="v-pills-{{ $abtKey }}" data-bs-toggle="pill" data-bs-target="#v-pills-tab-{{ $abtKey }}" type="button" role="tab" aria-controls="v-pills-{{ $abtKey }}" aria-selected="true"> <img src="{{asset('assets/images/solar_arrow_active.svg')}}" alt="" > {{ $aboutContent->about_section_content_title }}</button>
                         @endif
                         @endforEach
                         {{-- <button class="nav-link" id="v-pills-everystep-tab" data-bs-toggle="pill" data-bs-target="#v-pills-everystep" type="button" role="tab" aria-controls="v-pills-everystep" aria-selected="false" data-aos="fade-right" data-aos-delay="350" data-aos-offset="0"> <img src="{{asset('assets/images/solar_arrow_active.svg')}}" alt="" > Every step, smarter</button>

@@ -44,11 +44,10 @@ class IndexController extends Controller
         $bannerData = DB::table('banner_section')->first();
         $sliderMainData = DB::table('slider_content')->first();
         $sliderData = DB::table('slider_section')->get();
-        try {
-            $productData = $this->product->select('product_id','product_name','product_image','product_price')->where('product_status','1')->get()->random(2);
-        } catch(\Exception | Error $e) {
-            $productData = array();
-        }
+        $productData = $this->product->select('product_id','product_name','product_image','product_price')->where('product_status','1');
+		$productData =  ($productData->count() > 0)?$productData->get()->random(2):[];
+			
+		
 
         $aboutMainData = DB::table('about_section')->first();
         $aboutContentData = DB::table('about_section_content')->get();

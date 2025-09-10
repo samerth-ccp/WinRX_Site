@@ -41,7 +41,7 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <label class="form-label" for="color_code">Color Code</label>
-                                <input type="text" class="form-control required" data-coloris name="color_code" style="height: 36px;" id="color_code" placeholder="Color Code" value="{{$color->color_code??''}}" maxlength="100" >
+                                <input type="text" class="form-control required" data-coloris name="color_code" id="color_code" placeholder="Color Code" value="{{$color->color_code??''}}" maxlength="100" >
                             </div>
                         </div>
                     </div>

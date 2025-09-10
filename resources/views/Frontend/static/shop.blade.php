@@ -92,9 +92,9 @@
             <div class="page_container">
                 <div class="ars_tab_block">
                     <div class="d-flex align-items-start">
-                        <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                        <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist" aria-orientation="vertical" data-aos="fade-right" data-aos-delay="300" data-aos-offset="0">
                             @forEach($complementContentData as $complementKeyPre => $complementContent)
-                            <button class="nav-link @if($complementKeyPre == 0) active @endif" id="v-pills-{{ $complementKeyPre }}" data-bs-toggle="pill" data-bs-target="#v-pills-tab-{{ $complementKeyPre }}" type="button" role="tab" aria-controls="v-pills-{{ $complementKeyPre }}" aria-selected="true" data-aos="fade-right" data-aos-delay="300" data-aos-offset="0"> <img src="{{asset('assets/images/solar_arrow_active.svg')}}" alt="" > {{ $complementContent->shop_complement_content_title }} </button>
+                            <button class="nav-link @if($complementKeyPre == 0) active @endif" id="v-pills-{{ $complementKeyPre }}" data-bs-toggle="pill" data-bs-target="#v-pills-tab-{{ $complementKeyPre }}" type="button" role="tab" aria-controls="v-pills-{{ $complementKeyPre }}" aria-selected="true"> <img src="{{asset('assets/images/solar_arrow_active.svg')}}" alt="" > {{ $complementContent->shop_complement_content_title }} </button>
                             @endforEach
                         </div>
                         <div class="tab-content" id="v-pills-tabContent">

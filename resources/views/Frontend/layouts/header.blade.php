@@ -37,7 +37,12 @@
                 <li class="d-xl-block d-none"><a href="#why-ring" class="nav-link"> Why Ring </a></li>
                 @endif
                 <li class="d-xl-block d-none shop_link"><a href="{{ route('frontend.static.shop') }}" class="nav-link"> Shop </a></li>
-                <li class="cart_link"><a href="{{ route('frontend.static.cart') }}" class="nav-link"> <span class="card_count"></span> <img src="{{asset('assets/images/Cart.svg')}}" alt="img" /> </a></li>
+                <li class="cart_link">
+                    <a href="{{ route('frontend.static.cart') }}" class="nav-link"> 
+                        <span class="card_count"></span> 
+                        <img src="{{asset('assets/images/Cart.svg')}}" alt="img" /> 
+                    </a>
+                </li>
             </ul>
             {{--  --}}
             <div class="dot_icon d-xl-none ms-3 d-block" id="openSidebarMenu">
