@@ -19,7 +19,7 @@
             <div class="my_order_block">
                 <div class="review_order"  data-aos="fade-up" data-aos-delay="300" data-aos-offset="0">
                     <div class="back_product"><a href="{{route('frontend.static.shop')}}"> <img src="{{asset('assets/images/tabler_arrow-back.svg')}}" alt="tabler_arrow"> Continue Shopping </a> </div>
-                    <h2 class="cps_title"> Review Your Order  <a href="javascript:void(0)" class="trash-cart" style="display:none">Remove Cart</a></h2>
+                    <h2 class="cps_title"> Review Your Order  <a href="javascript:void(0)" class="trash-cart mb-2" style="display:none">Empty Cart</a></h2>
 
                     <div class="order_list_block">
 

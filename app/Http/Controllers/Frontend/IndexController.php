@@ -45,13 +45,14 @@ class IndexController extends Controller
         $sliderMainData = DB::table('slider_content')->first();
         $sliderData = DB::table('slider_section')->get();
         $productData = $this->product->select('product_id','product_name','product_image','product_price')->where('product_status','1');
-		try {
-			$productData =  ($productData->count() > 0)?$productData->get()->random(2):[];
-		} catch (\Exception | Error $e) {
-			$productData = array();
-		}
-			
 		
+		if ($productData->count() > 1) {
+			$productData = $productData->get()->random(2);
+		} elseif ($productData->count() === 1) {
+			$productData = collect([$productData->first()]); // Wrap single item in a collection
+		} else {
+			$productData = collect(); // Empty collection
+		}
 
         $aboutMainData = DB::table('about_section')->first();
         $aboutContentData = DB::table('about_section_content')->get();
@@ -59,9 +60,6 @@ class IndexController extends Controller
         $eraContentData = DB::table('newera_section_content')->get();
         $smartContentData = DB::table('smart_section')->first();
         $accuracyContentData = DB::table('accurate_section')->first();
-
-
-
 
         return view('Frontend.index.index',compact('pageData','pageMetaTitle','pageMetaKeyword','pageMetaDescription','bannerData','sliderData','sliderMainData','productData','aboutMainData','aboutContentData','eraMainData','eraContentData','smartContentData','accuracyContentData'));
     }

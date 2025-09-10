@@ -11,6 +11,7 @@ use Illuminate\Validation\Rule;
 
 use App\Models\Color;
 use DB;
+use App\Models\Product;
 
 
 class ColorController extends Controller
@@ -23,6 +24,7 @@ class ColorController extends Controller
 	public function __construct(){
 
 		$this->color = new Color;
+		$this->product = new Product;
 
     }
 
@@ -202,13 +204,29 @@ class ColorController extends Controller
 			$records = $request->all();
 
 			$records = $this->color->find($records['product_colors']);
-
+			$inuse = "";
+			$deleted = "";
 			foreach($records as $k=>$record){
-
-				$record->delete();
+				$usedInProduct = $this->product
+                ->whereJsonContains('product_color', (string) $record["color_id"])
+                ->exists();
+				if($usedInProduct) {
+					$inuse = 1;
+				} else {
+					$deleted = 1;
+					$record->delete();
+				}
 			}
 
-			return redirect(route('colors'))->with('success','Records deleted successfully.');
+			if(!empty($inuse)) {
+				if(!empty($deleted)) {
+					return redirect(route('colors'))->with('success','Records that are not in use have been deleted successfully.');
+				} else {
+					return redirect(route('colors'))->with('error','Cannot delete the selected color records as they are currently in use.');
+				}
+			} else {
+				return redirect(route('colors'))->with('success','Records deleted successfully.');
+			}
 		}
 		else{
 			return redirect(route('colors'))->with('error','Invalid Request!!');
