@@ -21,26 +21,30 @@ class CookieCartController extends Controller
         foreach ($cookieCart['items'] as $key => $item) {
             try {
                 $product = Product::findOrFail($item['product_id']);
-                $color = $product->color->find($item['meta']['color']);
-                $size = $item['meta']['size'];
+                if($product->product_status == '0') {
+                    unset($cookieCart['items'][$key]);
+                } else {
+                    $color = $product->color->find($item['meta']['color']);
+                    $size = $item['meta']['size'];
 
-                // example pricing logic:
-                $prices = $product->product_price;
-                $unit = $prices[$color->color_id];
+                    // example pricing logic:
+                    $prices = $product->product_price;
+                    $unit = $prices[$color->color_id];
 
-                $lines[] = [
-                    'key'          => $key,
-                    'product_id'   => $product->product_id,
-                    'product_name' => $product->product_name,
-                    'product_image' => $product->product_image,
-                    'product'    => ['id'=>$product->product_id,'name'=>$product->product_name],
-                    'qty'        => $item['qty'],
-                    'meta'       => $item['meta'] ?? [],
-                    'color'     => $color->color_name,
-                    'size'       => $size,
-                    'unit_cents' => $unit,
-                    'line_cents' => ($unit * $item['qty']),
-                ];
+                    $lines[] = [
+                        'key'          => $key,
+                        'product_id'   => $product->product_id,
+                        'product_name' => $product->product_name,
+                        'product_image' => $product->product_image,
+                        'product'    => ['id'=>$product->product_id,'name'=>$product->product_name],
+                        'qty'        => $item['qty'],
+                        'meta'       => $item['meta'] ?? [],
+                        'color'     => $color->color_name,
+                        'size'       => $size,
+                        'unit_cents' => $unit,
+                        'line_cents' => ($unit * $item['qty']),
+                    ];
+                }
             } catch (\Exception | Error $e) {
 
             }

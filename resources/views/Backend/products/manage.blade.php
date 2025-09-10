@@ -62,7 +62,10 @@
                                 <label class="form-label" for="product_size">Product Size</label>.
                                 <select class="required tom-select" name="product_size[]" id="product_size" multiple>
                                     <option value="">Select Size</option>
-                                    @foreach($sizes as $s=>$name)
+                                    @php
+                                        $sortsizes = $sizes->sort();
+                                    @endphp
+                                    @foreach($sortsizes as $s=>$name)
                                         <option value="{{$s}}" {{!empty($product->product_size) && in_array($s, $product->product_size)?'selected':''}}>Size: {{$name}}</option>
                                     @endforeach
                                 </select>

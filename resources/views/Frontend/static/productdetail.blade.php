@@ -39,7 +39,12 @@
                     <div class="size_block" data-aos="fade-up" data-aos-delay="450" data-aos-offset="0">
                         <label for="">Size:</label>
                         <div class="choose_size">
-                            @foreach($product->size as $key=>$size)
+                            @php
+                                $sortedSizes = $product->size->sortBy(function($item) {
+                                    return (int)$item->size;
+                                })->values();
+                            @endphp
+                            @foreach($sortedSizes as $key=>$size)
                                 <div class="size_box">
                                     <input class="size-tools" type="radio" name="size" id="ring{{$size->size}}" value="{{$size->size}}" {{$key==0?'checked':''}}>
                                     <label for="ring{{$size->size}}"> <span> {{$size->size}} </span> </label>

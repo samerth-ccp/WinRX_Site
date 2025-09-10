@@ -44,7 +44,7 @@ img { width: 100%; height: 100%; object-fit: contain; object-position: center; }
 .auth-page form .btn.btn-primary svg { display: none !important; }
 
 .auth-logo { width: 250px; margin: 0px auto; }
-.auth-content h5 { font-family: 'andesregular'; color: #161819; font-size: 24px !important; }
+.auth-content h5 { /* font-family: 'andesregular'; */ color: #161819; font-size: 24px !important; }
 .auth-content p.text-muted { font-size: 16px; line-height: 24px; text-align: center; color: #868686; margin-bottom: 15px; }
 
 
@@ -65,10 +65,10 @@ img { width: 100%; height: 100%; object-fit: contain; object-position: center; }
 .navbar-brand-box { background: #161819; border-right: 1px solid transparent !important; box-shadow: none; padding: 0px 15px; }
 .header-item { border: none !important; color: #fff !important; }
 
-.page-title-box h4 {  font-family: 'andesregular'; color: #161819; font-size: 30px !important; }
+.page-title-box h4 {  /* font-family: 'andesregular'; */ color: #161819; font-size: 30px !important; }
 .breadcrumb-item > a { color: #161819;}
 
-.dashtext { font-family: 'andesregular'; color: #161819; font-size: 30px !important; }
+.dashtext { /* font-family: 'andesregular'; */ color: #161819; font-size: 30px !important; }
 
 .card { border: 1px solid #E5E5E5; }
 .card-body { padding: 20px !important;  }
@@ -118,7 +118,7 @@ body[data-sidebar-size="sm"] .vertical-menu #sidebar-menu > ul > li:hover > a sv
 .dashboard-page .card { background: #F5F5F5; border-radius: 10px; transition: box-shadow 150ms ease; border: 1px dashed #D0D0D0; }
 .dashboard-page .card:hover {box-shadow: 0 8px 12px 0 rgba(0, 0, 0, 0.2); cursor: pointer; -webkit-transition: box-shadow 300ms ease; transition: box-shadow 300ms ease; }
 .dashboard-page .card-title { font-size: 24px; color: #161819; opacity: 0.8; margin-bottom: 20px; }
-.dashboard-page .card-subtitle { font-family: 'andesregular'; color: #161819 !important; font-size: 60px !important; margin-bottom: 0px !important; }
+.dashboard-page .card-subtitle { /* font-family: 'andesregular'; */ color: #161819 !important; font-size: 60px !important; margin-bottom: 0px !important; }
 
 .table.dataTable.dtr-inline.collapsed > tbody > tr > td.dtr-control::before, table.dataTable.dtr-inline.collapsed > tbody > tr > td.dtr-control::before { background-color: #161819 !important; }
 
@@ -126,7 +126,7 @@ body[data-sidebar-size="sm"] .vertical-menu #sidebar-menu > ul > li:hover > a sv
 
 .errorpage { min-height: 100vh; display: flex; align-items: center; justify-content: center; }
 .error_content_block { text-align: center;  }
-.error_content_block h1 { font-family: 'andesregular'; color: #161819 !important; font-size: 100px !important; margin-bottom: 0px !important; font-weight: bold; }
+.error_content_block h1 { /* font-family: 'andesregular'; */ color: #161819 !important; font-size: 100px !important; margin-bottom: 0px !important; font-weight: bold; }
 .error_content_block h1 span { width: 100px; height: 100px; display: inline-block; }
 .error_content_block h4 { color: #161819 !important; font-size: 24px !important; margin-bottom: 0px !important; opacity: 0.7; }
 .common_btn {background: linear-gradient(180deg, #484848 0%, #000000 100%); border: 1px solid #484848; font-weight: 500; font-size: 14px; line-height: 17px; text-align: center; color: #FFFFFF !important; border-radius: 50px; box-shadow: none; padding: 8px 30px; box-shadow: none !important; }

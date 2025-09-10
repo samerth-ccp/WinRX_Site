@@ -111,7 +111,7 @@
         </div>
 
         <div class="next_prev_buttons" data-aos="fade-up" data-aos-delay="300" data-aos-offset="0">
-            <button class="prev_btn"> <img src="{{asset('assets/images/solar_arrow_active.svg')}}" alt="img" /> </button>
+            <button class="prev_btn no-scroll"> <img src="{{asset('assets/images/solar_arrow_active.svg')}}" alt="img" /> </button>
             <button class="next_btn"> <img src="{{asset('assets/images/solar_arrow_active.svg')}}" alt="img" /> </button>
         </div>
     </div>
@@ -412,21 +412,70 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Prev / Next
-  prevBtn?.addEventListener('click', () => {
-    // Update activeIndex relative to current view
-    activeIndex = getNearestIndex();
-    const step = (mode === 'focus') ? 1 : 3; // grid feels like page of 3, focus moves 1
-    activeIndex = Math.max(0, activeIndex - step);
-    scrollToIndex(activeIndex);
-  });
+    // Prev / Next
+    prevBtn?.addEventListener('click', () => {
+        activeIndex = getNearestIndex();
+        const step = (mode === 'focus') ? 1 : 3;
+        activeIndex = Math.max(0, activeIndex - step);
 
-  nextBtn?.addEventListener('click', () => {
-    activeIndex = getNearestIndex();
-    const step = (mode === 'focus') ? 1 : 3;
-    activeIndex = Math.min(cards.length - 1, activeIndex + step);
-    scrollToIndex(activeIndex);
-  });
+        $(".next_btn").removeClass("no-scroll");
+
+        scrollToIndex(activeIndex);
+
+        setTimeout(() => {
+            const firstCard = $(cards[0])[0];
+            const container = $('.accuracy_carousel')[0];
+
+            if (isElementFullyInView(firstCard, container)) {
+                $(".prev_btn").addClass("no-scroll");
+            } else {
+                $(".prev_btn").removeClass("no-scroll");
+            }
+        }, 600);
+    });
+
+    nextBtn?.addEventListener('click', () => {
+        activeIndex = getNearestIndex();
+        const step = (mode === 'focus') ? 1 : 3;
+        activeIndex = Math.min(cards.length - 1, activeIndex + step);
+
+        $(".prev_btn").removeClass("no-scroll");
+
+        scrollToIndex(activeIndex);
+
+        setTimeout(() => {
+            const lastCard = $(cards[cards.length - 1])[0];
+            const container = $('.accuracy_carousel')[0];
+            if (isElementFullyInView(lastCard, container)) {
+                $(".next_btn").addClass("no-scroll");
+            } else {
+                $(".next_btn").removeClass("no-scroll");
+            }
+        }, 600);
+    });
+
+    function isElementFullyInView(el, container) {
+        if (!el || !container) return false;
+        // unwrap jQuery
+        if (el.jquery) el = el[0];
+        if (container.jquery) container = container[0];
+        if (!el.getBoundingClientRect || !container.getBoundingClientRect) return false;
+
+        const elRect = el.getBoundingClientRect();
+        const ctRect = container.getBoundingClientRect();
+
+        const es = getComputedStyle(el);
+        const cs = getComputedStyle(container);
+
+        // Use content box (inside border & padding)
+        const elLeft  = elRect.left  + parseFloat(es.borderLeftWidth)  + parseFloat(es.paddingLeft);
+        const elRight = elRect.right - parseFloat(es.borderRightWidth) - parseFloat(es.paddingRight);
+
+        const ctLeft  = ctRect.left  + parseFloat(cs.borderLeftWidth)  + parseFloat(cs.paddingLeft);
+        const ctRight = ctRect.right - parseFloat(cs.borderRightWidth) - parseFloat(cs.paddingRight);
+
+        return elLeft >= ctLeft && elRight <= ctRight;
+    }
 
   // Keep activeIndex roughly in sync on user scroll
   carousel.addEventListener('scroll', () => {

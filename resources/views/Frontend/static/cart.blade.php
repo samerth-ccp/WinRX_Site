@@ -4,6 +4,7 @@
 <!-- Include css -->
 <style>
     .home_background {background: url('{{asset('assets/images/checkshadow.jpg')}}') no-repeat !important; background-position: center !important; background-size: cover !important; }
+    .loading-spinner{position: absolute;left: 0px;right: 0px;margin-left: auto;margin-right: auto;}
 </style>
 @endsection
 
@@ -94,25 +95,47 @@
     }
 
     const updateQty = async (key, qty) => {
+        const cartItem = $('.olb_block[data-product="'+key+'"]')[0];
+        const spinner = cartItem.querySelector('.loading-spinner');
 
-        await fetch(`{{route('cart.update')}}/` + encodeURIComponent(key), {
-            method: 'PATCH',
-            headers: {'Content-Type':'application/json','X-CSRF-TOKEN':document.querySelector('meta[name=csrf-token]').content},
-            body: JSON.stringify({ qty })
-        }).then(res => res.json()).then(data => {
-            getCartItems();
-        })
+        spinner.style.display = 'inline-block'; // Show spinner
+
+        try {
+            await fetch(`{{route('cart.update')}}/` + encodeURIComponent(key), {
+                method: 'PATCH',
+                headers: {'Content-Type':'application/json','X-CSRF-TOKEN':document.querySelector('meta[name=csrf-token]').content},
+                body: JSON.stringify({ qty })
+            }).then(res => res.json()).then(data => {
+                getCartItems();
+            })
+        } catch (error) {
+            console.error('Error updating quantity:', error);
+        } finally {
+            spinner.style.display = 'none'; // Hide spinner
+        }
     }
 
     const removeFromCart = async (key) => {
-        await fetch(`{{route('cart.delete')}}/` + encodeURIComponent(key), {
-            method: 'DELETE',
-            headers: {'Content-Type':'application/json','X-CSRF-TOKEN':document.querySelector('meta[name=csrf-token]').content},
-        }).then(res => res.json()).then(data => {
-             getCartItems();
-        })
+        const cartItem = $('.olb_block[data-product="'+key+'"]')[0];
+        const spinner = cartItem.querySelector('.loading-spinner');
 
-        getCartItems();
+        spinner.style.display = 'inline-block'; // Show spinner
+
+        try {
+            await fetch(`{{route('cart.delete')}}/` + encodeURIComponent(key), {
+                method: 'DELETE',
+                headers: {'Content-Type':'application/json','X-CSRF-TOKEN':document.querySelector('meta[name=csrf-token]').content},
+            }).then(res => res.json()).then(data => {
+                getCartItems();
+            })
+
+            getCartItems();
+
+            } catch (error) {
+            console.error('Error removing from cart:', error);
+        } finally {
+            spinner.style.display = 'none'; // Hide spinner
+        }
     }
 
     getCartItems();
@@ -156,7 +179,11 @@
         // Delegated click: Decrement
         $(document).on('click', '.qty-stepper > :first-child', function () {
             const $stepper = $(this).closest('.qty-stepper');
-            setStepperValue($stepper, getStepperValue($stepper) - 1);
+            if(getStepperValue($stepper) ==  1) {
+                removeFromCart($(this).parents(".olb_block").attr("data-product"));
+            } else {
+                setStepperValue($stepper, getStepperValue($stepper) - 1);
+            }
         });
 
         // Delegated click: Increment

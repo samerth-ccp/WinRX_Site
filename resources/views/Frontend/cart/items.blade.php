@@ -20,6 +20,9 @@
             </div>
             {{--  --}}
             <button type="button" class="delete_btn" onclick="removeFromCart(`{{$line['key']}}`)"> <img src="{{asset('assets/images/delete.svg')}}" alt="delete"> </button>
+            <div class="loading-spinner spinner-border" role="status" style="display:none;">
+                <span class="visually-hidden">Loading...</span>
+            </div>
         </div>
     @endforeach
 @else
