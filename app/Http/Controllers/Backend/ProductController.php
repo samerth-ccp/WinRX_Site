@@ -201,15 +201,15 @@ class ProductController extends Controller
 
 			} else {
 
-				$product->product_name      		= $data['product_name'];
-				$product->product_description     	= $data['product_description'];
+				$product->product_name      		= strip_tags($data['product_name']);
+				$product->product_description     	= strip_tags($data['product_description']);
 				$product->product_color       		= $data['product_color']??[];
 				$product->product_size            	= $data['product_size']??[];
 				$product->product_price            	= $data['product_price']??[];
 
 
-				$product->product_helpful_answer    = $data['product_helpful_answer'];
-				$product->product_in_box    		= $data['product_in_box'];
+				$product->product_helpful_answer    = strip_tags($data['product_helpful_answer']);
+				$product->product_in_box    		= strip_tags($data['product_in_box']);
 				$product->product_tech_insights    	= $data['product_tech_insights'];
 				$product->product_faqs    			= (!empty($data['product_faqs'])?array_values($data['product_faqs']):[]);
 

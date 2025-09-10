@@ -537,13 +537,13 @@ class StaticController extends Controller
                         prd($e->getMessage());
                     }
                 }
-                $sliderDataInsert['slider_section_tagline'] = $data['slider_section_tagline'];
-				$sliderDataInsert['slider_section_heading'] = $data['slider_section_heading'];
-                $sliderDataInsert['slider_section_sub_heading'] = $data['slider_section_sub_heading'];
-                $sliderDataInsert['slider_section_para'] = $data['slider_section_para'];
-                $sliderDataInsert['slider_section_reviewer_name'] = $data['slider_section_reviewer_name'];
-                $sliderDataInsert['slider_section_reviewer_info'] = $data['slider_section_reviewer_info'];
-                $sliderDataInsert['slider_section_review'] = $data['slider_section_review'];
+                $sliderDataInsert['slider_section_tagline'] = strip_tags($data['slider_section_tagline']);
+				$sliderDataInsert['slider_section_heading'] = strip_tags($data['slider_section_heading']);
+                $sliderDataInsert['slider_section_sub_heading'] = strip_tags($data['slider_section_sub_heading']);
+                $sliderDataInsert['slider_section_para'] = strip_tags($data['slider_section_para']);
+                $sliderDataInsert['slider_section_reviewer_name'] = strip_tags($data['slider_section_reviewer_name']);
+                $sliderDataInsert['slider_section_reviewer_info'] = strip_tags($data['slider_section_reviewer_info']);
+                $sliderDataInsert['slider_section_review'] = strip_tags($data['slider_section_review']);
                 $http_path = asset('assets/storage/homeimages/');
                 if(!empty($isUpload["media_path"]["slider_section_tagline_image"]["mediaPath"])) {
                     $sliderDataInsert['slider_section_tagline_image'] = $isUpload["media_path"]["slider_section_tagline_image"]["mediaPath"];
@@ -669,8 +669,8 @@ class StaticController extends Controller
 						$request
 					);
                 }
-                $bannerDataInsert['banner_first_heading'] = $data['banner_first_heading'];
-				$bannerDataInsert['banner_second_heading'] = $data['banner_second_heading'];
+                $bannerDataInsert['banner_first_heading'] = strip_tags($data['banner_first_heading']);
+				$bannerDataInsert['banner_second_heading'] = strip_tags($data['banner_second_heading']);
                 $http_path = asset('assets/storage/homeimages/');
                 if(!empty($isUpload["media_path"]["banner_image"]["mediaPath"])) {
                     $bannerDataInsert['banner_image'] = $isUpload["media_path"]["banner_image"]["mediaPath"];
@@ -682,7 +682,7 @@ class StaticController extends Controller
                     $fileName = str_replace($http_path,'',$bannerData->banner_background_image);
 					$isDelete = Uploader::universalUnlink($fileName,storage_path('app/public/homeimages/'));
                 }
-				$bannerDataInsert['banner_para'] = $data['banner_para'];
+				$bannerDataInsert['banner_para'] = strip_tags($data['banner_para']);
                 if(!empty($bannerData)) {
 				    $isUpdated = DB::table('banner_section')->where('banner_section_id',1)->update($bannerDataInsert);
                 } else {
@@ -715,7 +715,7 @@ class StaticController extends Controller
                 $data = $request->all();
                 unset($data['_token']);
 
-                $mainContentInsert['slider_content_heading'] = $data['slider_content_heading'];
+                $mainContentInsert['slider_content_heading'] = strip_tags($data['slider_content_heading']);
                 if(!empty($sliderContent)) {
 				    $isUpdated = DB::table('slider_content')->where('slider_content_id',1)->update($mainContentInsert);
                 } else {
@@ -756,15 +756,15 @@ class StaticController extends Controller
                 $data = $request->all();
                 unset($data['_token']);
 
-                $smartContentInsert['smart_section_heading'] = $data['smart_section_heading'];
-                $smartContentInsert['smart_section_subheading'] = $data['smart_section_subheading'];
-                $smartContentInsert['smart_section_para'] = $data['smart_section_para'];
-                $smartContentInsert['smart_section_first_heading'] = $data['smart_section_first_heading'];
-                $smartContentInsert['smart_section_first_para'] = $data['smart_section_first_para'];
-                $smartContentInsert['smart_section_second_heading'] = $data['smart_section_second_heading'];
-                $smartContentInsert['smart_section_second_para'] = $data['smart_section_second_para'];
-                $smartContentInsert['smart_section_third_heading'] = $data['smart_section_third_heading'];
-                $smartContentInsert['smart_section_third_para'] = $data['smart_section_third_para'];
+                $smartContentInsert['smart_section_heading'] = strip_tags($data['smart_section_heading']);
+                $smartContentInsert['smart_section_subheading'] = strip_tags($data['smart_section_subheading']);
+                $smartContentInsert['smart_section_para'] = strip_tags($data['smart_section_para']);
+                $smartContentInsert['smart_section_first_heading'] = strip_tags($data['smart_section_first_heading']);
+                $smartContentInsert['smart_section_first_para'] = strip_tags($data['smart_section_first_para']);
+                $smartContentInsert['smart_section_second_heading'] = strip_tags($data['smart_section_second_heading']);
+                $smartContentInsert['smart_section_second_para'] = strip_tags($data['smart_section_second_para']);
+                $smartContentInsert['smart_section_third_heading'] = strip_tags($data['smart_section_third_heading']);
+                $smartContentInsert['smart_section_third_para'] = strip_tags($data['smart_section_third_para']);
                 if(!empty($smartContent)) {
 				    $isUpdated = DB::table('smart_section')->where('smart_section_id',1)->update($smartContentInsert);
                 } else {
@@ -833,21 +833,21 @@ class StaticController extends Controller
                     }
                 }
 
-                $accurateInsert['accurate_section_heading'] = $data['accurate_section_heading'];
-                $accurateInsert['accurate_section_sub_heading'] = $data['accurate_section_sub_heading'];
-                $accurateInsert['accurate_section_para'] = $data['accurate_section_para'];
-                $accurateInsert['accurate_section_first_heading'] = $data['accurate_section_first_heading'];
-                $accurateInsert['accurate_section_first_sub_heading'] = $data['accurate_section_first_sub_heading'];
-                $accurateInsert['accurate_section_first_para'] = $data['accurate_section_first_para'];
-                $accurateInsert['accurate_section_second_heading'] = $data['accurate_section_second_heading'];
-                $accurateInsert['accurate_section_second_sub_heading'] = $data['accurate_section_second_sub_heading'];
-                $accurateInsert['accurate_section_second_para'] = $data['accurate_section_second_para'];
-                $accurateInsert['accurate_section_third_heading'] = $data['accurate_section_third_heading'];
-                $accurateInsert['accurate_section_third_sub_heading'] = $data['accurate_section_third_sub_heading'];
-                $accurateInsert['accurate_section_third_para'] = $data['accurate_section_third_para'];
-                $accurateInsert['accurate_section_fourth_heading'] = $data['accurate_section_fourth_heading'];
-                $accurateInsert['accurate_section_fourth_sub_heading'] = $data['accurate_section_fourth_sub_heading'];
-                $accurateInsert['accurate_section_fourth_para'] = $data['accurate_section_fourth_para'];
+                $accurateInsert['accurate_section_heading'] = strip_tags($data['accurate_section_heading']);
+                $accurateInsert['accurate_section_sub_heading'] = strip_tags($data['accurate_section_sub_heading']);
+                $accurateInsert['accurate_section_para'] = strip_tags($data['accurate_section_para']);
+                $accurateInsert['accurate_section_first_heading'] = strip_tags($data['accurate_section_first_heading']);
+                $accurateInsert['accurate_section_first_sub_heading'] = strip_tags($data['accurate_section_first_sub_heading']);
+                $accurateInsert['accurate_section_first_para'] = strip_tags($data['accurate_section_first_para']);
+                $accurateInsert['accurate_section_second_heading'] = strip_tags($data['accurate_section_second_heading']);
+                $accurateInsert['accurate_section_second_sub_heading'] = strip_tags($data['accurate_section_second_sub_heading']);
+                $accurateInsert['accurate_section_second_para'] = strip_tags($data['accurate_section_second_para']);
+                $accurateInsert['accurate_section_third_heading'] = strip_tags($data['accurate_section_third_heading']);
+                $accurateInsert['accurate_section_third_sub_heading'] = strip_tags($data['accurate_section_third_sub_heading']);
+                $accurateInsert['accurate_section_third_para'] = strip_tags($data['accurate_section_third_para']);
+                $accurateInsert['accurate_section_fourth_heading'] = strip_tags($data['accurate_section_fourth_heading']);
+                $accurateInsert['accurate_section_fourth_sub_heading'] = strip_tags($data['accurate_section_fourth_sub_heading']);
+                $accurateInsert['accurate_section_fourth_para'] = strip_tags($data['accurate_section_fourth_para']);
                 if(!empty($accurateContent)) {
 				    $isUpdated = DB::table('accurate_section')->where('accurate_section_id',1)->update($accurateInsert);
                 } else {
@@ -882,9 +882,9 @@ class StaticController extends Controller
                 $data = $request->all();
                 unset($data['_token']);
 
-                $complementInsert['shop_complement_section_heading'] = $data['shop_complement_section_heading'];
-                $complementInsert['shop_complement_section_sub_heading'] = $data['shop_complement_section_sub_heading'];
-                $complementInsert['shop_complement_section_description'] = $data['shop_complement_section_description'];
+                $complementInsert['shop_complement_section_heading'] = strip_tags($data['shop_complement_section_heading']);
+                $complementInsert['shop_complement_section_sub_heading'] = strip_tags($data['shop_complement_section_sub_heading']);
+                $complementInsert['shop_complement_section_description'] = strip_tags($data['shop_complement_section_description']);
                 if(!empty($complementContent)) {
 				    $isUpdated = DB::table('shop_complement_section')->where('shop_complement_section_id',1)->update($complementInsert);
                 } else {
@@ -980,14 +980,14 @@ class StaticController extends Controller
                      $smartInsert['shop_smart_video_url'] = '';
                      $smartInsert['shop_smart_video_type'] = '2';
                 }
-                $smartInsert['shop_smart_heading'] = $data['shop_smart_heading'];
-                $smartInsert['shop_smart_sub_heading'] = $data['shop_smart_sub_heading'];
-                $smartInsert['shop_smart_description'] = $data['shop_smart_description'];
-                $smartInsert['shop_smart_video_heading'] = $data['shop_smart_video_heading'];
-                $smartInsert['shop_smart_video_sub_heading'] = $data['shop_smart_video_sub_heading'];
-                $smartInsert['shop_smart_video_tagline'] = $data['shop_smart_video_tagline'];
+                $smartInsert['shop_smart_heading'] = strip_tags($data['shop_smart_heading']);
+                $smartInsert['shop_smart_sub_heading'] = strip_tags($data['shop_smart_sub_heading']);
+                $smartInsert['shop_smart_description'] = strip_tags($data['shop_smart_description']);
+                $smartInsert['shop_smart_video_heading'] = strip_tags($data['shop_smart_video_heading']);
+                $smartInsert['shop_smart_video_sub_heading'] = strip_tags($data['shop_smart_video_sub_heading']);
+                $smartInsert['shop_smart_video_tagline'] = strip_tags($data['shop_smart_video_tagline']);
                 if(!empty($data['shop_smart_video_type']) && $data["shop_smart_video_type"] == '1') {
-                    $smartInsert['shop_smart_video_url'] = $data['shop_smart_video_url'];
+                    $smartInsert['shop_smart_video_url'] = strip_tags($data['shop_smart_video_url']);
                     $smartInsert['shop_smart_video'] = '';
                     $smartInsert['shop_smart_video_type'] = '1';
                 }
@@ -1046,8 +1046,8 @@ class StaticController extends Controller
                     }
                 }
 
-                $bannerInsert['shop_banner_title'] = $data['shop_banner_title'];
-                $bannerInsert['shop_banner_description'] = $data['shop_banner_description'];
+                $bannerInsert['shop_banner_title'] = strip_tags($data['shop_banner_title']);
+                $bannerInsert['shop_banner_description'] = strip_tags($data['shop_banner_description']);
                 if(!empty($bannerContent)) {
 				    $isUpdated = DB::table('shop_banner')->where('shop_banner_id',1)->update($bannerInsert);
                 } else {
@@ -1082,9 +1082,9 @@ class StaticController extends Controller
                 $data = $request->all();
                 unset($data['_token']);
 
-                $eraContentInsert['newera_section_heading'] = $data['newera_section_heading'];
-                $eraContentInsert['newera_section_subheading'] = $data['newera_section_subheading'];
-                $eraContentInsert['newera_section_para'] = $data['newera_section_para'];
+                $eraContentInsert['newera_section_heading'] = strip_tags($data['newera_section_heading']);
+                $eraContentInsert['newera_section_subheading'] = strip_tags($data['newera_section_subheading']);
+                $eraContentInsert['newera_section_para'] = strip_tags($data['newera_section_para']);
                 if(!empty($neweraContent)) {
 				    $isUpdated = DB::table('newera_section')->where('newera_section_id',1)->update($eraContentInsert);
                 } else {
@@ -1167,10 +1167,10 @@ class StaticController extends Controller
                     }
                 }*/
 
-                $aboutContentInsert['about_section_main_heading'] = $data['about_section_main_heading'];
-                $aboutContentInsert['about_section_heading'] = $data['about_section_heading'];
-                $aboutContentInsert['about_section_sub_heading'] = $data['about_section_sub_heading'];
-                $aboutContentInsert['about_section_para'] = $data['about_section_para'];
+                $aboutContentInsert['about_section_main_heading'] = strip_tags($data['about_section_main_heading']);
+                $aboutContentInsert['about_section_heading'] = strip_tags($data['about_section_heading']);
+                $aboutContentInsert['about_section_sub_heading'] = strip_tags($data['about_section_sub_heading']);
+                $aboutContentInsert['about_section_para'] = strip_tags($data['about_section_para']);
                 //$aboutContentInsert['about_section_keypoints'] = $data['about_section_keypoints'];
                 if(!empty($aboutContent)) {
 				    $isUpdated = DB::table('about_section')->where('about_section_id',1)->update($aboutContentInsert);
@@ -1356,7 +1356,7 @@ class StaticController extends Controller
 						$request
 					);
                 }
-                $aboutDataInsert['about_section_content_title'] = $data['about_section_content_title'];
+                $aboutDataInsert['about_section_content_title'] = strip_tags($data['about_section_content_title']);
                 $http_path = asset('assets/storage/homeimages/');
                 if(!empty($isUpload["media_path"]["about_section_content_img1"]["mediaPath"])) {
                     $aboutDataInsert['about_section_content_img1'] = $isUpload["media_path"]["about_section_content_img1"]["mediaPath"];
@@ -1610,8 +1610,8 @@ class StaticController extends Controller
 						$request
 					);
                 }
-                $eraDataInsert['newera_section_content_title'] = $data['newera_section_content_title'];
-                $eraDataInsert['newera_section_content_tagline'] = $data['newera_section_content_tagline'];
+                $eraDataInsert['newera_section_content_title'] = strip_tags($data['newera_section_content_title']);
+                $eraDataInsert['newera_section_content_tagline'] = strip_tags($data['newera_section_content_tagline']);
                 $http_path = asset('assets/storage/homeimages/');
                 if(!empty($isUpload["media_path"]["newera_section_content_background_image"]["mediaPath"])) {
                     $eraDataInsert['newera_section_content_background_image'] = $isUpload["media_path"]["newera_section_content_background_image"]["mediaPath"];
@@ -1848,8 +1848,8 @@ class StaticController extends Controller
 						$request
 					);
                 }
-                $shoptechDataInsert['shop_tech_section_title'] = $data['shop_tech_section_title'];
-                $shoptechDataInsert['shop_tech_section_description'] = $data['shop_tech_section_description'];
+                $shoptechDataInsert['shop_tech_section_title'] = strip_tags($data['shop_tech_section_title']);
+                $shoptechDataInsert['shop_tech_section_description'] = strip_tags($data['shop_tech_section_description']);
                 $http_path = asset('assets/storage/homeimages/');
                 if(!empty($isUpload["media_path"]["shop_tech_section_image"]["mediaPath"])) {
                     $shoptechDataInsert['shop_tech_section_image'] = $isUpload["media_path"]["shop_tech_section_image"]["mediaPath"];
@@ -2079,7 +2079,7 @@ class StaticController extends Controller
 						$request
 					);
                 }
-                $shopcomplementDataInsert['shop_complement_content_title'] = $data['shop_complement_content_title'];
+                $shopcomplementDataInsert['shop_complement_content_title'] = strip_tags($data['shop_complement_content_title']);
                 $http_path = asset('assets/storage/homeimages/');
                 if(!empty($isUpload["media_path"]["shop_complement_content_first_image"]["mediaPath"])) {
                     $shopcomplementDataInsert['shop_complement_content_first_image'] = $isUpload["media_path"]["shop_complement_content_first_image"]["mediaPath"];

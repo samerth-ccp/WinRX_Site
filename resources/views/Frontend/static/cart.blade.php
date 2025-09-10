@@ -5,6 +5,8 @@
 <style>
     .home_background {background: url('{{asset('assets/images/checkshadow.jpg')}}') no-repeat !important; background-position: center !important; background-size: cover !important; }
     .loading-spinner{position: absolute;left: 0px;right: 0px;margin-left: auto;margin-right: auto;}
+    .trash-cart{background: linear-gradient(180deg, #484848 0%, #000000 100%);border: 1px solid #484848;color: #fff;font-family: 'Inter';border-radius: 20px;padding-left: 20px;padding-right: 20px;transition: transform 0.1s ease, box-shadow 0.2s ease;font-size: 14px;float: right;margin-top: 5px;position: relative;height: 35px;line-height: 33px;}
+    .trash-cart:hover{background: #fff;border: 1px solid #000000;color:#000;}
 </style>
 @endsection
 
@@ -17,7 +19,7 @@
             <div class="my_order_block">
                 <div class="review_order"  data-aos="fade-up" data-aos-delay="300" data-aos-offset="0">
                     <div class="back_product"><a href="{{route('frontend.static.shop')}}"> <img src="{{asset('assets/images/tabler_arrow-back.svg')}}" alt="tabler_arrow"> Continue Shopping </a> </div>
-                    <h2 class="cps_title"> Review Your Order </h2>
+                    <h2 class="cps_title"> Review Your Order  <a href="javascript:void(0)" class="trash-cart" style="display:none">Remove Cart</a></h2>
 
                     <div class="order_list_block">
 
@@ -91,6 +93,11 @@
             $('#total_cost').text('$ '+data.total_cents+' USD')
             $('.order_list_block').html(data.items);
             $('.card_count').text(data.count||'');
+            if(data.count > 0) {
+                $(".trash-cart").css("display","block");
+            } else {
+                $(".trash-cart").css("display","none");
+            }
         })
     }
 
@@ -206,6 +213,30 @@
         });
 
     });
+
+    $(document).on("click",".trash-cart",function() {
+        const cartItem = $('.olb_block')[0];
+        const spinner = cartItem.querySelector('.loading-spinner');
+
+        spinner.style.display = 'inline-block'; // Show spinner
+
+        try {
+            $.ajax({
+                url: `{{route('trashcart')}}`,
+                type: "POST",
+                data: {tid:1},
+                headers: {'Content-Type':'application/json','X-CSRF-TOKEN':document.querySelector('meta[name=csrf-token]').content},
+                success: function(data){
+                    getCartItems();
+                }
+            })
+
+            } catch (error) {
+            console.error('Error removing from cart:', error);
+        } finally {
+            spinner.style.display = 'none'; // Hide spinner
+        }
+    })
 </script>
 
 @endsection

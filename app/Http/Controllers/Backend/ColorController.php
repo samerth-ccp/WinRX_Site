@@ -187,7 +187,7 @@ class ColorController extends Controller
 
 			} else {
 
-				$this->color->updateOrCreate(['color_id' => $Id],['color_name' => $data['color_name'], 'color_code' => $data['color_code']]);
+				$this->color->updateOrCreate(['color_id' => $Id],['color_name' => substr(strip_tags($data['color_name']),0,100), 'color_code' => substr(strip_tags($data['color_code']),0,64)]);
 
 				return redirect(route('colors'))->with('success','Color '.($Id?'updated':'added').' successfully.');
 			}

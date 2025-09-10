@@ -62,6 +62,12 @@ class CookieCartController extends Controller
         ]);
     }
 
+    public function trashcart(Request $req, CookieCart $cart)
+    {
+        $cart->clear(); // Clear the cart cookie
+        return response()->json(['message' => 'Cart has been emptied.']);
+    }
+
     public function add(Request $req)
     {
         $data = $req->validate([
@@ -122,6 +128,9 @@ class CookieCartController extends Controller
         foreach ($cookieCart['items'] as $key => $item) {
             try {
                 $product = Product::findOrFail($item['product_id']);
+                if($product->product_status == '0') {
+                    unset($cookieCart['items'][$key]);
+                }
             } catch(\Exception | Error $e) {
                 unset($cookieCart['items'][$key]);
             }

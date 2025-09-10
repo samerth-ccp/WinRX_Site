@@ -45,7 +45,11 @@ class IndexController extends Controller
         $sliderMainData = DB::table('slider_content')->first();
         $sliderData = DB::table('slider_section')->get();
         $productData = $this->product->select('product_id','product_name','product_image','product_price')->where('product_status','1');
-		$productData =  ($productData->count() > 0)?$productData->get()->random(2):[];
+		try {
+			$productData =  ($productData->count() > 0)?$productData->get()->random(2):[];
+		} catch (\Exception | Error $e) {
+			$productData = array();
+		}
 			
 		
 

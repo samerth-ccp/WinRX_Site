@@ -76,6 +76,7 @@ Route::group(['middleware' => ['guest']], function() {
         Route::get('/get', [CookieCartController::class, 'show'])->name('cart.get');
         Route::get('/count', [CookieCartController::class, 'count'])->name('cart.count');
     });
+    Route::match(['post'],'/trash-cart', [CookieCartController::class, 'trashcart'])->name('trashcart');
 
     /*** Create Symbolic Links */
     Route::get('/run-ar-cmd',[IndexController::class, 'runarcmd'])->name('frontend.runarcmd');
