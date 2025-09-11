@@ -179,9 +179,12 @@ class StaticController extends Controller
         ->where('product_status', '1')
         ->where('product_slug', $Id)
         ->first();
-
 		if(empty($product)){
-			return redirect()->back()->with('error','Product not found.');
+            if (url()->previous() == route('cart.count')) {
+                return redirect()->route('frontend.index.index')->with('error', 'Product not found.');
+            } else {
+			    return redirect()->back()->with('error','Product not found.');
+            }
 		}
 
         return view('Frontend.static.productdetail',compact('product'));
