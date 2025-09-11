@@ -203,6 +203,50 @@
                         title:'Remove this item',
                     }
                 },
+                onInitialize: function () {
+                    const MAX = 30;
+                    const input = this.control_input; // Tom Select’s inner <input>
+
+                    const allowedKeys = new Set([
+                        'Backspace','Delete','ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End','Tab'
+                    ]);
+
+                    if(elm.id == 'product_color') {
+                        // Block extra characters on keydown
+                        input.addEventListener('keydown', (e) => {
+                            if ((e.ctrlKey || e.metaKey) && ['a','c','x','v'].includes(e.key.toLowerCase())) return; // allow common shortcuts
+                            const selLen = input.selectionEnd - input.selectionStart;
+                            if (input.value.length - selLen >= MAX && !allowedKeys.has(e.key)) {
+                            e.preventDefault();
+                            }
+                        });
+
+                        // Handle paste: allow only the needed slice
+                        input.addEventListener('paste', (e) => {
+                            const text = (e.clipboardData || window.clipboardData).getData('text');
+                            const selLen = input.selectionEnd - input.selectionStart;
+                            const room = MAX - (input.value.length - selLen);
+                            if (room <= 0) {
+                            e.preventDefault();
+                            return;
+                            }
+                            if (text.length > room) {
+                            e.preventDefault();
+                            // Insert only what fits
+                            const start = input.selectionStart, end = input.selectionEnd;
+                            input.setRangeText(text.slice(0, room), start, end, 'end');
+                            input.dispatchEvent(new Event('input', { bubbles: true }));
+                            }
+                        });
+
+                        // Safety net for IME/composition/mobile: trim on input if needed
+                        input.addEventListener('input', () => {
+                            if (input.value.length > MAX) {
+                            input.value = input.value.slice(0, MAX);
+                            }
+                        });
+                    }
+                },
                 onItemAdd: function(value){
                     if(elm.id == 'product_color'){
 
@@ -222,7 +266,7 @@
                 },
             });
         });
-        
+
 
         new TomSelect("#product_in_box",{
             persist: false,
