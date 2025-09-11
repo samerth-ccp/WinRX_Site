@@ -123,6 +123,20 @@ File: Main Js File
                 $(this).parent().parent().parent().parent().parent().addClass("mm-active");
             }
         });
+        setTimeout(function() {
+            var pageUrl = window.location.href.split(/[?#]/)[0];
+            if (pageUrl.includes("manage-slider")) {
+                $('a[href*="slider-section"]').addClass('active').closest('li').addClass('mm-active').closest('ul').addClass('mm-show').parent().addClass("mm-active").parent().addClass("mm-active");
+            } else if (pageUrl.includes("manage-aboutcontent")) {
+                $('a[href*="about-content"]').addClass('active').closest('li').addClass('mm-active').closest('ul').addClass('mm-show').parent().addClass("mm-active").parent().addClass("mm-active");
+            } else if (pageUrl.includes("manage-neweracontent")) {
+                $('a[href*="newera-content"]').addClass('active').closest('li').addClass('mm-active').closest('ul').addClass('mm-show').parent().addClass("mm-active").parent().addClass("mm-active");
+            } else if (pageUrl.includes("manage-shopcomplementcontent")) {
+                $('a[href*="shop-complement-content"]').addClass('active').closest('li').addClass('mm-active').closest('ul').addClass('mm-show').parent().addClass("mm-active").parent().addClass("mm-active");
+            } else if (pageUrl.includes("manage-shoptechsection")) {
+                $('a[href*="shop-tech-section"]').addClass('active').closest('li').addClass('mm-active').closest('ul').addClass('mm-show').parent().addClass("mm-active").parent().addClass("mm-active");
+            }
+        }, 1000)
     }
 
     function initMenuItemScroll() {

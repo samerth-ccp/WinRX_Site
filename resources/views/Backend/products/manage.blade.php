@@ -222,6 +222,7 @@
                 },
             });
         });
+        
 
         new TomSelect("#product_in_box",{
             persist: false,
@@ -236,24 +237,26 @@
 
         $('#manage_form').validate();
 
-        CKEDITOR.config.allowedContent = true;
-        CKEDITOR.config.protectedSource.push(/<i[^>]*><\/i>/g);
-        CKEDITOR.replace('product_tech_insights',{
-            //contentsCss : [''],
-            toolbar:[
-                [ 'Source', '-', 'Save', 'NewPage', 'ExportPdf', 'Preview', 'Print', '-', 'Templates' ],
-                [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ],
-                [ 'Find', 'Replace', '-', 'SelectAll', '-', 'Scayt' ],
-                [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'CopyFormatting', 'RemoveFormat' ],
-                [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language' ],
-                [ 'Link', 'Unlink', 'Anchor' ],
-                [ 'Image', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe' ],
-                [ 'Styles', 'Format', 'Font', 'FontSize' ], ['Youtube'],
-                [ 'TextColor', 'BGColor' ],
-                [ 'Maximize', 'ShowBlocks' ],
-            ],
-            height: 380
-        });
+        setTimeout(function() {
+            CKEDITOR.config.allowedContent = true;
+            CKEDITOR.config.protectedSource.push(/<i[^>]*><\/i>/g);
+            CKEDITOR.replace('product_tech_insights',{
+                //contentsCss : [''],
+                toolbar:[
+                    [ 'Source', '-', 'Save', 'NewPage', 'ExportPdf', 'Preview', 'Print', '-', 'Templates' ],
+                    [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ],
+                    [ 'Find', 'Replace', '-', 'SelectAll', '-', 'Scayt' ],
+                    [ 'Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'CopyFormatting', 'RemoveFormat' ],
+                    [ 'NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl', 'Language' ],
+                    [ 'Link', 'Unlink', 'Anchor' ],
+                    [ 'Image', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe' ],
+                    [ 'Styles', 'Format', 'Font', 'FontSize' ], ['Youtube'],
+                    [ 'TextColor', 'BGColor' ],
+                    [ 'Maximize', 'ShowBlocks' ],
+                ],
+                height: 380
+            });
+        }, 1000)
     });
 
     let x = $('#faq_list').find('.form-label').length;

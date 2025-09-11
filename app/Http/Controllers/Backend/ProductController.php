@@ -141,7 +141,11 @@ class ProductController extends Controller
 
 				$row[] = '<div class="text-center"><input class="form-check-input elem_ids checkboxes" type="checkbox" name="'.$sTable.'['.$row1->$sIndexColumn.']" value="'.$row1->$sIndexColumn.'"></div>';
 
-				$row[] = $row1->product_name;
+				if(strlen($row1->product_name) > 30) {
+					$row[] = substr($row1->product_name,0,30)."...";
+				} else {
+					$row[] = $row1->product_name;
+				}
 
 				$row[] = '<div style="width:200px;"><img src="'.asset('assets/storage/products/'.$row1->product_image).'" class="w-100" /></div>';
 
