@@ -34,7 +34,7 @@
                 @forEach($productData as $product)
                 <div class="col-sm-6">
                     <div class="banner_card_block" data-aos="fade-zoom-in" data-aos-easing="ease-in-back" data-aos-delay="300" data-aos-offset="0">
-                        <a href="{{ route('frontend.static.productdetail', ['pid' => encrypt($product->product_id)]) }}"><img src="{{ asset('assets/storage/products/'.$product->product_image) }}" alt="ring" /></a>
+                        <a href="{{ route('frontend.static.productdetail', ['pid' => $product->product_slug]) }}"><img src="{{ asset('assets/storage/products/'.$product->product_image) }}" alt="ring" /></a>
                         <div class="ring_info_block">
                             <div class="rib_box">
                                 <h2 class="ring_name"> {{ $product->product_name }} </h2>
@@ -43,7 +43,7 @@
                                 @endphp
                                 <p class="ring_amount"> From ${{ number_format($minPrice,2) }} </p>
                             </div>
-                            <a href="{{ route('frontend.static.productdetail', ['pid' => encrypt($product->product_id)]) }}" class="btn shop_btn"> Shop </a>
+                            <a href="{{ route('frontend.static.productdetail', ['pid' => $product->product_slug]) }}" class="btn shop_btn"> Shop </a>
                         </div>
                     </div>
                 </div>

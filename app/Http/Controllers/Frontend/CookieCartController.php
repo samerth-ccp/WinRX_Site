@@ -36,6 +36,7 @@ class CookieCartController extends Controller
                         'product_id'   => $product->product_id,
                         'product_name' => $product->product_name,
                         'product_image' => $product->product_image,
+                        'product_slug' => $product->product_slug,
                         'product'    => ['id'=>$product->product_id,'name'=>$product->product_name],
                         'qty'        => $item['qty'],
                         'meta'       => $item['meta'] ?? [],

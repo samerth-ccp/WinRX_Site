@@ -137,7 +137,7 @@ class StaticController extends Controller
 		$pageMetaDescription = "shop";
         $bannerContentData = DB::table('shop_banner')->first();
 
-		$productData = $this->product->select('product_id','product_name','product_image','product_price')->where('product_status','1')->get();
+		$productData = $this->product->select('product_id','product_name','product_image','product_price','product_slug')->where('product_status','1')->get();
 
         $smartContentData = DB::table('shop_smart')->first();
         $embedUrl = "";
@@ -171,9 +171,14 @@ class StaticController extends Controller
 	public function productDetail(Request $request){
 		$pageKey = 'product_detail';
 
-		$Id = decrypt($request->route('pid'));
+		//$Id = decrypt($request->route('pid'));
+        $Id = $request->route('pid');
 
-		$product = $this->product->where('product_status','1')->find($Id);
+		//$product = $this->product->where('product_status','1')->find($Id);
+        $product = $this->product
+        ->where('product_status', '1')
+        ->where('product_slug', $Id)
+        ->first();
 
 		if(empty($product)){
 			return redirect()->back()->with('error','Product not found.');
