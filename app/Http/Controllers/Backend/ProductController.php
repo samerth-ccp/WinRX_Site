@@ -174,6 +174,25 @@ class ProductController extends Controller
 		}
 	}
 
+    private function createSlug($string) {
+        // Remove HTML tags
+        $string = strip_tags($string);
+        // Convert to lowercase
+        $string = strtolower($string);
+        // Replace non letter or digits by -
+        $string = preg_replace('~[^\pL\d]+~u', '-', $string);
+        // Transliterate (optional)
+        $string = iconv('utf-8', 'us-ascii//TRANSLIT', $string);
+        // Remove unwanted characters
+        $string = preg_replace('~[^-\w]+~', '', $string);
+        // Trim
+        $string = trim($string, '-');
+        // Remove duplicate -
+        $string = preg_replace('~-+~', '-', $string);
+        // Return 'n-a' if empty
+        return empty($string) ? 'n-a' : $string;
+    }
+
 	public function manage(Request $request){
 
 		Session::put('PageHeading', 'Manage Product');
@@ -216,7 +235,7 @@ class ProductController extends Controller
 				$product->product_in_box    		= strip_tags($data['product_in_box']);
 				$product->product_tech_insights    	= $data['product_tech_insights'];
 				$product->product_faqs    			= (!empty($data['product_faqs'])?array_values($data['product_faqs']):[]);
-
+                $product->product_slug              = $this->createSlug($data['product_name']);
 
 				if(!empty($request->file())){
 
