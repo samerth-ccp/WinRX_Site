@@ -3,6 +3,7 @@
 <script src="{{ URL::asset('assets/libs/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 <script src="{{ URL::asset('assets/libs/feather-icons/feather.min.js')}}"></script>
 <script src="{{ URL::asset('assets/libs/jquery-validation/dist/jquery.validate.js')}}"></script>
+@if (!Route::is('frontend.index.index'))
 <script src="{{ URL::asset('assets/libs/jquery-validation/dist/additional-methods.js')}}"></script>
 <!-- alertifyjs js -->
 <script src="{{ URL::asset('/assets/libs/alertifyjs/build/alertify.min.js') }}"></script>
@@ -10,6 +11,7 @@
 <script src="{{ URL::asset('/assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
 <!-- Block UI js -->
 <script src="{{ URL::asset('assets/frontjs/jquery.blockUI.js')}}"></script>
+@endif
 
 @yield('script')
 
