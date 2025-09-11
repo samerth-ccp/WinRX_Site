@@ -124,19 +124,27 @@ File: Main Js File
             }
         });
         setTimeout(function() {
-            var pageUrl = window.location.href.split(/[?#]/)[0];
-            if (pageUrl.includes("manage-slider")) {
-                $('a[href*="slider-section"]').addClass('active').closest('li').addClass('mm-active').closest('ul').addClass('mm-show').parent().addClass("mm-active").parent().addClass("mm-active");
-            } else if (pageUrl.includes("manage-aboutcontent")) {
-                $('a[href*="about-content"]').addClass('active').closest('li').addClass('mm-active').closest('ul').addClass('mm-show').parent().addClass("mm-active").parent().addClass("mm-active");
-            } else if (pageUrl.includes("manage-neweracontent")) {
-                $('a[href*="newera-content"]').addClass('active').closest('li').addClass('mm-active').closest('ul').addClass('mm-show').parent().addClass("mm-active").parent().addClass("mm-active");
-            } else if (pageUrl.includes("manage-shopcomplementcontent")) {
-                $('a[href*="shop-complement-content"]').addClass('active').closest('li').addClass('mm-active').closest('ul').addClass('mm-show').parent().addClass("mm-active").parent().addClass("mm-active");
-            } else if (pageUrl.includes("manage-shoptechsection")) {
-                $('a[href*="shop-tech-section"]').addClass('active').closest('li').addClass('mm-active').closest('ul').addClass('mm-show').parent().addClass("mm-active").parent().addClass("mm-active");
-            }
-        }, 1000)
+            const pageUrl = window.location.href.split(/[?#]/)[0];
+            const menuMap = {
+                "manage-slider": "slider-section",
+                "manage-aboutcontent": "about-content",
+                "manage-neweracontent": "newera-content",
+                "manage-shopcomplementcontent": "shop-complement-content",
+                "manage-shoptechsection": "shop-tech-section"
+            };
+
+            Object.entries(menuMap).forEach(([urlKey, linkKey]) => {
+                if (pageUrl.includes(urlKey)) {
+                    const $link = $(`a[href*="${linkKey}"]`);
+                    $link
+                        .addClass('active')
+                        .closest('li').addClass('mm-active')
+                        .closest('ul').addClass('mm-show')
+                        .parent().addClass('mm-active')
+                        .parent().addClass('mm-active');
+                }
+            });
+        }, 500)
     }
 
     function initMenuItemScroll() {
