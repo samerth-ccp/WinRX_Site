@@ -80,7 +80,7 @@
                                         @foreach($product->product_price as $key=>$value)
                                             <div class="mt-2 form-label" for="product_price_{{$key}}">
                                                 <label>{{$colors[$key] ?? ''}} Color Price ($)</label>
-                                                <input type="number" class="form-control required onlyNumbers money_charm" name="product_price[{{$key}}]" id="product_price_{{$key}}" placeholder="{{$colors[$key] ?? ''}} Color Price" value="{{$value}}" >
+                                                <input type="number" class="form-control required onlyNumbers money_charm" name="product_price[{{$key}}]" id="product_price_{{$key}}" placeholder="{{$colors[$key] ?? ''}} Color Price" value="{{$value}}" maxlength="10">
                                             </div>
                                         @endforeach
                                     @endif
