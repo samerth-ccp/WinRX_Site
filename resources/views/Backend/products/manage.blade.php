@@ -237,6 +237,14 @@
 
 
         new TomSelect("#product_in_box",{
+            maxOptions: 50,              // cap options rendered
+            renderCache: true,           // reuse rendered items
+            diacritics: false,           // faster matching if you don’t need accents
+            closeAfterSelect: true,
+            hideSelected: true,
+            // Gate remote / heavy loads
+            shouldLoad: (q) => q.length >= 2,  // don’t fetch on tiny queries
+            loadThrottle: 250,                 // debounce network calls (if using `load`)
             persist: false,
             createOnBlur: true,
             create: true,
@@ -244,6 +252,9 @@
                 remove_button:{
                     title:'Remove this item',
                 }
+            },
+            onInitialize: function () {
+                this.control_input.setAttribute('maxlength', '100');
             },
         });
 

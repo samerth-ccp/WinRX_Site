@@ -44,15 +44,21 @@ class IndexController extends Controller
         $bannerData = DB::table('banner_section')->first();
         $sliderMainData = DB::table('slider_content')->first();
         $sliderData = DB::table('slider_section')->get();
-        $productData = $this->product->select('product_id','product_name','product_image','product_price','product_slug')->where('product_status','1');
 
+        $productData = $this->product
+        ->select('product_id','product_name','product_image','product_price','product_slug')
+        ->where('product_status', '1')
+        ->inRandomOrder()
+        ->limit(2)
+        ->get();
+        /*$productData = $this->product->select('product_id','product_name','product_image','product_price','product_slug')->where('product_status','1');
 		if ($productData->count() > 1) {
 			$productData = $productData->get()->random(2);
 		} elseif ($productData->count() === 1) {
 			$productData = collect([$productData->first()]); // Wrap single item in a collection
 		} else {
 			$productData = collect(); // Empty collection
-		}
+		}*/
         $aboutMainData = DB::table('about_section')->first();
         $aboutContentData = DB::table('about_section_content')->get();
         $eraMainData = DB::table('newera_section')->first();
